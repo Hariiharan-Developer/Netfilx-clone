@@ -66,3 +66,7 @@
     font-size: 13px;
     cursor: pointer;
 }
+
+.nav-dark{
+    background: #141414;
+}
