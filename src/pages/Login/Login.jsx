@@ -8,10 +8,11 @@ const Login = () => {
 
 const [signState,setSignState] =useState('Sign In')
 const [name,setName] = useState('')
-const [password,setPassword] = useState('')
 const [email,setEmail] = useState('')
+const [password,setPassword] = useState('')
 
 const user_auth =async (event)=>{
+  event.preventDefault();
   if(signState==='Sign In'){
     await login(email,password)
   }else{

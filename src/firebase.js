@@ -7,9 +7,9 @@ import {
      signOut
      } from "firebase/auth";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { toast } from "react-toastify";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyC-u676FyVg5V2eDKLIQnUVSox0WcgOBLU",
@@ -35,13 +35,15 @@ const signup = async(name,email,password)=>{
         await addDoc(collection(db,'user'),{
             uid: user.uid,
             name,
-            authProvider: 'local',
+            authProvider:'local',
             email,
         })
+        toast.success('User created succesfully')
 
     } catch (error) {
-        console.error(error.message)
-        alert(error)
+        console.error('User Create Error:'+ error.message)
+       
+        toast.error(error.code)
     }
 }
 
@@ -50,12 +52,15 @@ const login = async(email,password)=>{
     await signInWithEmailAndPassword(auth,email,password)
  } catch (error) {
     console.error(error.message)
-    alert(error)
+   
+    toast.error(error.code)
+    toast.success('Log In')
  }  
 }
 
 const logout =()=>{
     signOut(auth);
+    toast.success('signing Out')
 }
 
 export {auth,db,login,signup,logout}
