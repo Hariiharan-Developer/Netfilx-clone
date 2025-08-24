@@ -43,18 +43,19 @@ const signup = async(name,email,password)=>{
     } catch (error) {
         console.error('User Create Error:'+ error.message)
        
-        toast.error(error.code)
+        toast.error(error.code.split('/'[1].split('-').join('')))
     }
 }
 
 const login = async(email,password)=>{
  try {
     await signInWithEmailAndPassword(auth,email,password)
+     toast.success('Logged in succesfully')
  } catch (error) {
     console.error(error.message)
    
-    toast.error(error.code)
-    toast.success('Log In')
+    toast.error(error.code.split('/'[1].split('-').join('')))
+   
  }  
 }
 
