@@ -5,6 +5,10 @@ const userRouter = require('./routes/user.routes')
 const dotenv = require('dotenv').config()
 const app = express()
 
+//Accepting to read body fields:
+app.use(express.json())
+app.use(express.urlencoded({extends:true}))
+
 //User API call:
 app.use('/api/user',userRouter)
 
