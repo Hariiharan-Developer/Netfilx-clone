@@ -1,0 +1,19 @@
+const express = require('express')
+const connectDB = require('./config/db')
+const errorHandler = require('./middleware/error.handler')
+const userRouter = require('./routes/user.routes')
+const dotenv = require('dotenv').config()
+const app = express()
+
+//User API call:
+app.use('/api/user',userRouter)
+
+
+//Database callback:
+connectDB()
+
+app.listen(process.env.PORT,()=>{
+    console.log(`server listening on the port: http://localhost:${process.env.PORT}`)
+})
+
+app.use(errorHandler)
