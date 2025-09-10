@@ -14,7 +14,7 @@ const Profile = () => {
       }
 
       try {
-        const res = await fetch('http://localhost:4000/api/user/profile', {
+        const res = await fetch('https://netfilx-clone-backend-7hb5.onrender.com', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
