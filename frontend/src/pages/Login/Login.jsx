@@ -5,7 +5,7 @@ import logo from "../../assets/assets/logo.png";
 import netflix_spinner from "../../assets/assets/netflix_spinner.gif";
 
 // Backend base URL
-const API_URL = "http://localhost:4000/api/user";
+const API_URL = "https://netfilx-clone-backend-7hb5.onrender.com";
 
 // Login API
 const login = async (email, password) => {
