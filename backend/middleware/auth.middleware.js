@@ -1,28 +1,33 @@
-const jwt = require('jsonwebtoken')
-const User = require('../model/user.model')
+const jwt = require('jsonwebtoken');
+const asyncHandler = require('express-async-handler');
+const User = require('../model/user.model');
 
-const authMiddleware = async (req,res,next)=>{
-    const authHeader = req.headers.authorization
-    if(!authHeader || !authHeader.startsWith('Bearer')){
-       return res.status(401).json({
-            success:false,
-            message:'No token, access denied'
-        })
+const protect = asyncHandler(async (req, res, next) => {
+  let token;
 
-        
-    }
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
     try {
-        const token = authHeader.split(' ')[1]
-        const decoded = jwt.verify(token,process.env.SECRET_KEY)
-        req.user = await User.findById(decoded.id).select('-password')
-        next()
-    } catch (error) {
-        console.error(error.message)
-        res.status(401).json({
-            success:false,
-            message:'Token is not valid, Expired'
-        })
-    }
-}
+      // Get token from header
+      token = req.headers.authorization.split(' ')[1];
 
-module.exports = authMiddleware
+      // Verify token
+      const decoded = jwt.verify(token, process.env.SECRET_KEY);
+
+      // Attach user to request, exclude password
+      req.user = await User.findById(decoded.id).select('-password');
+
+      next();
+    } catch (error) {
+      res.status(401);
+      throw new Error('Not authorized, token failed');
+    }
+  } else {
+    res.status(401);
+    throw new Error('No token, authorization denied');
+  }
+});
+
+module.exports = { protect };

@@ -78,7 +78,7 @@ const getUser =asyncHandler(async (req,res)=>{
 
     res.status(200).json({
         message:'get user works',
-        date:user
+        data:user
     })
 })
 
